@@ -1,0 +1,25 @@
+<launch>
+
+    <arg name="hostname"                    value="192.168.10.40" />
+
+    <node name="sick_mrs_1xxx" pkg="sick_scan" type="sick_generic_caller" respawn="false" output="screen">
+        <param name="scanner_type" type="string" value="sick_mrs_1xxx"/>
+        <param name="intensity_resolution_16bit_" type="bool" value="False" />
+        <param name="hostname" type="string" value="$(arg hostname)" />
+        <param name="port" type="string" value="2112" />
+    </node>
+
+    <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+        <arg name="rtabmap_args"            value="--Optimizer/GravitySigma 0.3" />
+        <arg name="approx_sync"             value="false" />
+        <arg name="localization"            value="false" />
+
+        <arg name="subscribe_scan_cloud"    value="true" />
+        <arg name="scan_cloud_topic"        value="/cloud" />
+        <arg name="subscribe_depth"         value="false" />
+    </include>
+
+    <node pkg="rviz" type="rviz" name="rviz" />
+
+
+</launch>

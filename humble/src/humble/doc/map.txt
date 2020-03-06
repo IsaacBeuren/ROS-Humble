@@ -1,0 +1,17 @@
+Aqui estão os arquivos do Mapa.
+
+O arquivo .db é o banco de dados geral do mapa, nele está salvo todas as imagens que o sistema usa para se localizar e navegar. 
+Nele fica também o arquivp .pgm, este é a imagem do mapa que o sistema uma para navega. Esta imagem é a que usamos para editar o mapa manualmente.
+
+Acessar o Banco de Dados:
+1- Abra o terminal (ctrl + alt + T) e digite o comando "rtabmap-databaseViewer" sem aspas.
+2- Clique em File -> Open Database. 
+3- Vá para a pasta "Home" e procure pela pasta ".ros". Esta é uma pasta normalmente invisivel, para torna-la visivel use o comando crtl + H.
+4- O arquivo chama-se rtabmap.db dentro da pasta .ros
+
+Para editar o mapa Manualmente:
+1- Após acessar o banco de dados, clique em File -> Export optimized 2D map. Salve o arquivo em formato .pgm
+2- Abra um editor de imagem, pode ser o GNU - GIMP Image Editor, e importe o arquivo .pgm salvo no passo anterior. Com as ferramentas básicas como pincel e borracha você pode desenhar a vontade no mapa.
+3- Salve a imagem que você acabou de editar
+4- Novamente no rtabmap-databaseViewer clique em File -> Import optimized 2D map, e escolha o arquivo salvo no passo anterior. Agora o mapa já está atualizado.
+

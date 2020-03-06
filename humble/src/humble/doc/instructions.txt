@@ -1,0 +1,20 @@
+Antes de utilizar o sistema de navegação natural, é necessário mapear o ambiente.
+Para mapear, primeiro é necessário referenciar dois arquivos que fazem o setup das bibliotecas usadas (2 primeiros comandos abaxo) e logo após
+iniciar o sistema de mapeamento (terceiro comando abaixo).
+
+$ source /home/als/Documents/humble/install/setup.bash
+$ source /home/als/Documents/humble/devel/setup.bash
+$ roslaunch humble rs_mapping.launch
+
+Não se esqueça que se você quiser sobrescrever um mapa já existente é necessário retirar o paramento "--delete_db_on_start" do arquivo de
+launch rs_mapping.launch caso você queira começar um mapa novo, deixe este comando no arquivo.
+
+Com o mapa gerando, você deve avaliar se é necessario fazer correções manuais no mapa ou se ele já está bom para navegar.
+Caso seja necessário fazer alguma alteração no mapa, siga o procedimento descrito no documento map.txt. 
+
+Para iniciar o sistema de navegação, é necessário referenciar as bilbiotecas novamente com os dois comandos de "source" utilizados acima,
+se você já digitou estes comandos 1x no terminal não precisa utiliza-los novamente. 
+
+$ source /home/als/Documents/humble/install/setup.bash
+$ source /home/als/Documents/humble/devel/setup.bash
+$ roslaunch humble rs_navigation.launch

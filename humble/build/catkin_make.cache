@@ -1,0 +1,2 @@
+humble:realsense-ros/realsense2_camera:realsense-ros/realsense2_description:rtabmap_ros
+-DCATKIN_DEVEL_PREFIX=/home/als/Documents/humble/devel -DCMAKE_INSTALL_PREFIX=/home/als/Documents/humble/install -G Unix Makefiles

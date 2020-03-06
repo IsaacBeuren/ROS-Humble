@@ -1,0 +1,8 @@
+prefix=/home/als/Documents/humble/devel
+
+Name: humble
+Description: Description of humble
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/als/Documents/humble/devel/lib 
+Requires: 

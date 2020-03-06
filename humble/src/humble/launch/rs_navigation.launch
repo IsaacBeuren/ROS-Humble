@@ -1,0 +1,48 @@
+<launch>
+
+    <remap from="/rtabmap/grid_map"         to="/map" />
+    
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="align_depth"             value="true" />
+        <arg name="unite_imu_method"        value="linear_interpolation" />
+    </include>
+
+    <node name="imu_filter" pkg="imu_filter_madgwick" type="imu_filter_node" output="screen" args="">
+        <param name="_use_mag"                value="false" />  <!--wheather to use magnetic field data-->
+        <param name="_publish_tf"             value="false" /> <!--wheather to publiish a tf transform that represents the orientation of the IMU-->
+        <param name="_world_frame"            value="enu" /> <!-- orientation of the world frame is x-east, y-north and z-up-->
+
+        <remap from="/imu/data_raw"         to="/camera/imu" />
+        <remap from="/imu/data"             to="/rtabmap/imu" />   
+    </node>
+
+    <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+        <arg name="rtabmap_args"            value="--Optimizer/GravitySigma 0.3" />
+        <arg name="approx_sync"             value="false" />
+        <arg name="localization"            value="true" />
+
+        <arg name="depth_topic"             value="/camera/aligned_depth_to_color/image_raw" />
+        <arg name="rgb_topic"                value="/camera/color/image_raw" />
+        <arg name="camera_info_topic"        value="/camera/color/camera_info" />
+        <arg name="imu_topic"               value="/rtabmap/imu" />    
+
+    </include>
+
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+        <rosparam file="$(find humble)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find humble)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find humble)/param/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find humble)/param/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find humble)/param/move_base_params.yaml" command="load" />
+        <rosparam file="$(find humble)/param/dwa_local_planner_params.yaml" command="load" />
+    </node>
+
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find humble)/launch/rviz/rs_navigation_config.rviz" />
+
+    <node pkg="humble" type="cmd_to_plc.py" name="cmd_to_plc" output="screen" />
+
+    <node pkg="humble" type="status_to_plc.py" name="status_to_plc" output="screen" />
+    
+
+</launch>
